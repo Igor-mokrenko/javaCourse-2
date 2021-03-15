@@ -45,4 +45,5 @@ public class Main {
 
         return "Осталось работать " + restWorkingHours + " часов.";
     }
+
 }
