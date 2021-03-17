@@ -1,49 +1,39 @@
-import cat.Cat;
-import daysOfWeek.DaysOfWeek;
-import human.Human;
-import obstacle.Obstacle;
-import participant.Participant;
-import robot.Robot;
-import runningTrack.RunningTrack;
-import wall.Wall;
 
 public class Main {
 
     public static void main(String[] args) {
-        Participant[] participants = {
-                new Human("Bill", 100, 1),
-                new Robot("Tetris", 10, 5),
-                new Cat("Good boy", 20, 2)
+        String[][] array = {
+                {"22", "17", "10", "2"},
+                {"31", "6", "55", "80"},
+                {"99", "5", "3", "9"},
+                {"68", "76", "34", "81"},
         };
 
-        Obstacle[] obstacles = {
-                new Wall(2),
-                new RunningTrack(10)
+        String[][] invalidSizeArray = {
+                {"22", "17", "10", "2"},
+                {"31", "6", "55", "80"},
+                {"99", "5", "3", "9"},
+                {"68", "76"},
         };
 
-        startChallenge(participants, obstacles);
-        System.out.println(getWorkingHours(DaysOfWeek.Monday));
-        System.out.println(getWorkingHours(DaysOfWeek.Friday));
-        System.out.println(getWorkingHours(DaysOfWeek.Sunday));
+        String[][] invalidDataArray = {
+                {"22", "17", "10", "2"},
+                {"31", "6", "55", "80"},
+                {"99", "5", "3asdf", "9"},
+                {"68", "76", "34", "81"},
+        };
+
+        start(array);
+        start(invalidSizeArray);
+        start(invalidDataArray);
     }
 
-    static void startChallenge(Participant[] participants, Obstacle[] obstacles) {
-        for (Participant participant : participants) {
-            for (Obstacle obstacle : obstacles) {
-                if (!obstacle.isPossible(participant)) break;
-            }
+    static void start(String[][] array) {
+        try {
+            Utils.isValidArrLength(array, 4);
+            System.out.println("Сумма: " + Utils.getSum(array));
+        } catch (MyArraySizeException | MyArrayDataException e) {
+            e.printStackTrace();
         }
     }
-
-    static String getWorkingHours(DaysOfWeek dayOfWeek) {
-        final int workingDaysCount = 5;
-
-        if (dayOfWeek.getDayCount() > 5) return "Сегодня выходной!.";
-
-        final int workingDayHours = 8;
-        final int restWorkingHours = (workingDaysCount - (dayOfWeek.getDayCount() - 1)) * workingDayHours;
-
-        return "Осталось работать " + restWorkingHours + " часов.";
-    }
-
 }
