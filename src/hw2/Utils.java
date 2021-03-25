@@ -1,3 +1,5 @@
+package hw2;
+
 public class Utils {
 
     public static boolean isValidArrLength(String[][] array, int validLength) throws MyArraySizeException {
